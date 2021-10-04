@@ -1,0 +1,70 @@
+﻿@model PagedList.IPagedList<SachOnline.Models.ChiTietHoaDon>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "XemChiTietDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayoutAdmin.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">Thông tin hóa đơn: @Session["DonHang"].ToString() </h4>
+                        <h4 class="card-title ">Tình trạng: @Session["TinhTrang"].ToString() </h4>
+                        <h4 class="card-title ">Ngày tạo: @Session["NgayTao"].ToString() </h4>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var tongtien = 0;
+                        }
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <tr align="Center">
+                                        <th>Hình ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr align="Center">
+                                            <td><a href="@Url.Action("Details","SanPhams",new { id=item.SanPham.MaSP})"><img style="width:80px;height:120px;" src="~/Assets/images/@item.SanPham.HinhAnh" /></a></td>
+                                            <td>@item.SanPham.TenSP</td>
+                                            <td>@item.SanPham.Gia</td>
+                                            <td>@item.SoLuong</td>
+                                            <td>
+                                                @{
+                                                    var x = item.SoLuong;
+                                                    var y = item.SanPham.Gia;
+                                                    var z = x * y;
+                                                    tongtien = (int)(tongtien + z);
+                                                    <span>@z</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <h2 align="right" class="card-header card-header-primary">Tổng tiền: @tongtien</h2>
+                        </div>
+
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

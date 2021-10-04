@@ -1,0 +1,23 @@
+﻿
+body{
+   background-color:bisque;
+}
+.field-validation-error{
+    color:red;
+}
+#form-register{
+    position:absolute;
+    top:30px;
+    left:30px;
+    border: 1px solid #ccc;
+    padding: 10px 10px;
+}
+table{
+
+    width:500px;
+
+}
+.title-form{
+    text-align:center;
+    font-size:30px;
+}
